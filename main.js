@@ -95,6 +95,33 @@
     });
   });
 
+  // ---- JotForm iframe fix for mobile ----
+  // The JotForm script inserts an iframe with width:10px + minWidth:100%.
+  // On mobile, the percentage can fail inside certain containers.
+  // This observer catches the iframe once it's inserted and forces proper sizing.
+  var formContainer = document.querySelector('.contact__form');
+  if (formContainer) {
+    var formObserver = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+        mutation.addedNodes.forEach(function (node) {
+          if (node.tagName === 'IFRAME') {
+            node.style.width = '100%';
+            node.style.minWidth = '100%';
+            node.style.maxWidth = '100%';
+            node.style.display = 'block';
+            // Re-apply on window resize
+            window.addEventListener('resize', function () {
+              node.style.width = '100%';
+              node.style.minWidth = '100%';
+            }, { passive: true });
+            formObserver.disconnect();
+          }
+        });
+      });
+    });
+    formObserver.observe(formContainer, { childList: true, subtree: true });
+  }
+
   // ---- Smooth Scroll for anchor links ----
   document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
