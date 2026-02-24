@@ -804,13 +804,18 @@ img { max-width: 100%; display: block; }
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 2rem 2.5rem;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
 }
 
 /* Style overrides for the embedded JotForm */
 .contact__form iframe {
   width: 100% !important;
+  min-width: 100% !important;
+  max-width: 100% !important;
   border: none !important;
+  display: block !important;
 }
 
 .contact__phone {
@@ -955,8 +960,9 @@ img { max-width: 100%; display: block; }
     gap: 1.5rem;
   }
 
-  .contact__actions {
-    flex-direction: column;
+  .contact__form {
+    padding: 1rem 0.75rem;
+    border-radius: 6px;
   }
 
   .btn--lg {
